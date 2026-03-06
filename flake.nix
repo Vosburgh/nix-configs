@@ -18,23 +18,6 @@
       flake = false;
     };
 
-    # # Hyprland
-    # hyprland = {
-    #   url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    #   # url = "github:hyprwm/hyprland";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    # hyprwm-contrib = {
-    #   url = "github:hyprwm/contrib";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    # hyprland-plugins = {
-    #   url = "github:hyprwm/hyprland-plugins";
-    #   inputs.hyprland.follows = "hyprland";
-    # };
-    # hyprland-portal.url = "github:hyprwm/xdg-desktop-portal-hyprland";
-    # hyprlock.url = "github:hyprwm/Hyprlock";
-
     # Misc
     nix-colors.url = "github:misterio77/nix-colors";
     catppuccin.url = "github:catppuccin/nix";
@@ -65,7 +48,6 @@
           	home-manager =
            	{
             	extraSpecialArgs = {inherit inputs outputs nix-colors catppuccin; };
-            	backupFileExtension = "backup";
             	useGlobalPkgs = true;
              	useUserPackages = true;
               	users.nick = import ./home/configurations/configuration.nix;
@@ -74,23 +56,5 @@
         ];
       };
     };
-
-    # homeConfigurations = {
-    #   "nick@artorias" = inputs.home-manager.lib.homeManagerConfiguration {
-    #     pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-    #     extraSpecialArgs = {inherit inputs outputs nix-colors catppuccin; };
-    #     modules = [
-
-    #       ./home/configurations/configuration.nix
-    #       # {
-    #       #   home = {
-    #       #     packages = [
-    #       #       inputs.home-manager.packages.x86_64-linux.home-manager
-    #       #     ];
-    #       #   };
-    #       # }
-    #     ];
-    #   };
-    # };
   };
 }

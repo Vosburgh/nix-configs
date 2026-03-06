@@ -14,11 +14,11 @@
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      
-      initExtra = ''
+
+      initContent = ''
       # Bat theme
       export BAT_THEME=cyberdream
-      
+
       # FZF Previews
       export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
       export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
@@ -37,7 +37,7 @@
       }
       '';
       shellAliases = {
-        deploy = "nixos-rebuild switch --flake ~/.config/nix#artorias --use-remote-sudo";
+        deploy = "nixos-rebuild switch --flake ~/.config/nix#artorias --sudo";
         deploy-home = "home-manager switch -b backup --flake  ~/.config/nix#nick@artorias --verbose";
         dots = "cd /home/nick/.config/nix";
         update = "nix flake update";
@@ -51,12 +51,12 @@
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ 
-          # "thefuck" 
-          "git" 
+        plugins = [
+          # "thefuck"
+          "git"
           "fzf"
           ];
-      };    
+      };
     };
 
     home.packages = with pkgs; [

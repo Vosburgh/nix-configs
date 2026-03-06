@@ -1,5 +1,4 @@
 { inputs, config, lib, pkgs, outputs, ... }:
-
 {
 
   # Imports
@@ -21,12 +20,13 @@
 
   # Define your hostname.
   networking.hostName = "artorias";
-
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   # Specify kernel to use
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Set your time zone.
-  time.timeZone = "Japan";
+  time.timeZone = "America/Vancouver";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_CA.UTF-8";
@@ -50,7 +50,7 @@
     # Enable flakes and 'nix' command
     experimental-features = "nix-command flakes";
     # Deduplicate and optimize nix store
-    # auto-optimise-store = true;
+    auto-optimise-store = true;
   };
 
 
@@ -64,7 +64,7 @@
       after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;
@@ -77,7 +77,8 @@
   # Configure Hardware
   hardware = {
     bluetooth.enable = true;
-    openrazer.enable = true;
+    # Borked
+    # openrazer.enable = true;
   };
 
   # Mount NAS
@@ -172,8 +173,10 @@
   # Configure environment
   environment = {
     systemPackages = with pkgs; [
+      alsa-lib
       brightnessctl
       cifs-utils
+      ffmpeg-full
       fuse
       git
       git-lfs
@@ -181,8 +184,19 @@
       openrazer-daemon
       polychromatic
       wireguard-tools
-      xwaylandvideobridge
+
+      wineWowPackages.waylandFull   # or staging/full
+      winetricks
+      # freetype
+      # fontconfig
+      # cabextract
     ];
+  };
+
+  environment.sessionVariables = {
+    EDITOR = "zed";
+    BROWSER = "firefox";
+    TERMINAL = "kitty";
   };
 
   # Configure fonts
@@ -190,7 +204,7 @@
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       source-han-sans
       source-han-serif
       source-han-mono
@@ -200,7 +214,7 @@
       fira-code
       fira-code-symbols
       dina-font
-      ubuntu_font_family
+      ubuntu-classic
       # nerdfonts
       nerd-fonts.fira-code
       # (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -239,6 +253,12 @@
     ];
 
     xfconf.enable = true;
+
+
+    # Allows 3rd party shit to work with nix-shell
+    nix-ld = {
+	    enable = true;
+    };
   };
 
   # Configure system-wide services

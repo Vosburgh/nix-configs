@@ -9,6 +9,7 @@
     outputs.homeModules.starship
     outputs.homeModules.neovim
     outputs.homeModules.zsh
+    outputs.homeModules.godot-mono
   ];
 
   # Custom Modules
@@ -20,24 +21,29 @@
   zsh.enable = true;
   lazygit.enable = true;
 
+  home.sessionVariables = {
+    EDITOR = "zed";
+    BROWSER = "firefox";
+    TERMINAL = "kitty";
+    NIXPKGS_ALLOW_UNFREE = "1";
+  };
+
   home = {
     username = "nick";
     homeDirectory = "/home/nick";
     stateVersion = "23.11";
-
     packages = with pkgs; [
 
       # Programs
       # beeper
-      bitwarden
+      beyond-all-reason # RTS game
+      bitwarden-desktop
       blender
-      # blender   # Borked due to https://github.com/NixOS/nixpkgs/pull/325292
       btop
-      kdePackages.dolphin
       # dunst
-      # element-desktop
+      element-desktop
       git
-      godot_4
+      godot
       # grimblast
       htop
       killall
@@ -46,8 +52,8 @@
       libreoffice-qt
       lutris
       material-maker
-      mpv
-      nexusmods-app-unfree
+
+      # nexusmods-app-unfree
       nvtopPackages.amd
       nwg-look
       obs-studio
@@ -56,21 +62,30 @@
       prismlauncher
       qbittorrent
       r2modman
-      rofi-wayland
+      rofi
       spotify
       thunderbird
+      # trenchbroom
       vesktop
-      vscodium
       zed-editor
 
+      # kdePackages
+      kdePackages.dolphin
+      # Plugins for dolphin
+      kdePackages.kdegraphics-thumbnailers
+      kdePackages.ffmpegthumbs
+      kdePackages.qtimageformats
+
       # Utilities
+      appimage-run # Just for running appimage's
       bat
       delta
       eza
       fzf
-      glxinfo
+      mesa-demos
       ncdu
       neofetch
+      nodejs
       p7zip
       polkit_gnome
       wget
@@ -79,16 +94,17 @@
       unzip
       unrar
 
-      # winetricks (all versions)
-      winetricks
+      # # winetricks (all versions)
+      # winetricks
 
-      # native wayland support (unstable)
-      wineWowPackages.waylandFull
+      # # native wayland support (unstable)
+      # wineWowPackages.waylandFull
     ];
   };
 
   nixpkgs.config = {
     allowUnfree = true;
+    rocmSupport = true;
   };
   xdg.enable = true;
   xdg.userDirs.enable = true;
@@ -102,19 +118,32 @@
     };
 
     # Cheat sheets
-    navi.enable = true;
+    navi = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     home-manager = {
     	enable = true;
     };
+
+    mpv = {
+    	enable = true;
+     	scripts = [
+      		pkgs.mpvScripts.uosc # Better mpv client
+      ];
+    };
   };
+
 
   services = {
     kdeconnect = {
       enable = true;
       indicator = true;
     };
-
+    easyeffects = {
+      enable = true;
+    };
 
   };
 }

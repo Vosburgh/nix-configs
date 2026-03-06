@@ -2,7 +2,7 @@
 {
   imports = [
     nix-colors.homeManagerModule
-    inputs.catppuccin.homeManagerModules.catppuccin
+    inputs.catppuccin.homeModules.catppuccin
   ];
 
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;

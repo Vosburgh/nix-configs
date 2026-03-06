@@ -30,6 +30,10 @@
     # Enable Gamemode optimisation
     programs.gamemode.enable = true;
 
+    environment.systemPackages = with pkgs; [
+    	protonup-qt
+    ];
+
     # Override Steam package to provide extra libraries for games
     nixpkgs.config.packageOverrides = pkgs: {
       steam = pkgs.steam.override {

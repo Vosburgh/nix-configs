@@ -29,6 +29,9 @@
         };
       name = "Catppuccin-Macchiato-Compact-Sapphire-Dark";
     };
+    gtk2 = {
+    	enable = false;
+    };
     gtk3 = {
       extraConfig = {
         gtk-application-prefer-dark-theme = true;
